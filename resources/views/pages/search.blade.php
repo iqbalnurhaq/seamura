@@ -105,6 +105,7 @@
                       style="background-image: url('{{ Storage::url(product.photo) }}')"
                     ></div> --}}
                     <img :src="product.photo"  class="products-image" alt="">
+                    
                   </div>
                   <div class="products-text">@{{ product.name }}</div>
                   <hr>

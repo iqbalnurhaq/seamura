@@ -31,7 +31,7 @@
           <div class="list-group list-group-flush">
             <a
               href="{{ route('admin-dashboard') }}"
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action {{ (request()->is('admin/dashboard*')) ? 'active' : '' }}"
               >Dashboard</a
             >
             <a
@@ -50,11 +50,16 @@
               >Ongkir</a
             >
             <a
+              href="{{ route('order.index') }}"
+              class="list-group-item list-group-item-action {{ (request()->is('admin/order')) ? 'active' : '' }}"
+              >Order</a
+            >
+            <a
               href="{{ route('cabang.index') }}"
               class="list-group-item list-group-item-action {{ (request()->is('admin/cabang')) ? 'active' : '' }}"
               >Cabang</a
             >
-            <a href="/index.html" class="list-group-item list-group-item-action"
+            <a  href="{{ route('logout') }}" class="list-group-item list-group-item-action"
               >Sign Out</a
             >
           </div>

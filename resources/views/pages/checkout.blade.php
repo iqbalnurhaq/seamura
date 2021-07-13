@@ -29,6 +29,19 @@
       font-weight: bold;
       border-radius: 5px;
     }
+
+    .meta-satuan{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 7px;
+     
+      background-color: blue;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 5px;
+    }
   </style>
 @endpush
 
@@ -65,7 +78,8 @@
                   <tr>
                     <td>Product</td>
                     <td>Price</td>
-                    <td>Menu</td>
+                    <td>Jumlah</td>
+                    <td>Satuan</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -82,10 +96,14 @@
                           :alt="product.name"
                           class="cart-image"
                         />
+
+                        
                           
                           <div class="product-title">@{{ product.name }}</div>
                        
                       </td>
+
+                 
                   
                       <td style="width: 20%">
                           <div class="col">
@@ -107,7 +125,17 @@
 
                   
                         </td>
-                      <td style="width: 30%">
+
+
+
+                        <td style="width: 15%">
+
+                          <div class="products-title">@{{ product.size }}</div>
+                        
+                      </td>
+
+
+                      <td style="width: 15%">
 
                           <button type="submit" class="btn btn-sm btn-danger"><img src="/images/trash.svg" alt="" /></button>
                         
@@ -249,6 +277,8 @@
     <script src="https://unpkg.com/vue-toasted"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+
+      
          function formatNumber(n, c, d, t){
           var c = isNaN(c = Math.abs(c)) ? 2 : c, 
               d = d === undefined ? '.' : d, 
@@ -268,8 +298,8 @@
         mounted() {
           AOS.init();
           this.getRegenciesData();
-          console.log(this.isDisable())
-         
+          // console.log(this.isDisable())
+        //  console.log();
         
         },
         data: {
@@ -356,19 +386,10 @@
             return this.pemesan == "" || this.regencies_id == "default_regencies" || this.districts_id == "default_districts" || this.villages_id == "default_villages" || this.detail_alamat == "" || this.no_tlp == "";
           },
           ordernow(){
-             var self = this;
-            const add = {name : self.pemesan, no_tlp : self.no_tlp, kota: self.regencies_id, kecamatan : self.districts_id, desa : self.villages_id, detail_alamat : self.detail_alamat, products : self.products}
-              axios.post('{{ route('api-order') }}', add)
-                .then(function(response){
-                  
-
-                        console.log(reponse)
                         
-
-                        
-                        // location.href = "https://wa.me/6285713145481?text="+ this.getDataOrder();
-                })
+            location.href = "https://wa.me/6289520306937?text="+ this.getDataOrder();
           },
+             
           getDataOrder(){
             var text = "";
             var no = 1;
@@ -378,17 +399,23 @@
             for (let i = 0; i < this.products.length; i++) {
              text += no++ + ". ";
              text += this.products[i].name + " ";
-             text += this.products[i].qty + " KG";
+             var slc = parseInt(this.products[i].size.slice(0,this.products[i].size.indexOf(" ")))  * this.products[i].qty;
+            //  console.log(slc);
+             this.products[i].size.indexOf("gram") > -1 ? text+= slc / 1000 + " Kg" : text += slc + " Kg";
+            //  text += this.products[i].qty + " KG";
              text += "\n";
               // text += this.products[i].name;
+              slc = 0;
             }
 
             text += "======================" + "\n";
               let total = 0;
             this.products.forEach(item => {
-                total += (item.price * item.qty);
+                let disonProduct = item.diskon > 0 ? (item.diskon / 100) * item.price : null;
+                item.diskon > 0 ?  total += (item.price - disonProduct) *  item.qty : total += item.price * item.qty;
+                
             });
-            text += "Total : " + total;
+            text += "Total : " + "Rp. " + total;
             return encodeURI(text);
           },
         },

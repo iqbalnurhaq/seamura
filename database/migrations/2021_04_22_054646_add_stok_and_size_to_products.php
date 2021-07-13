@@ -27,8 +27,9 @@ class AddStokAndSizeToProducts extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->integer('stok');
-            $table->string('size');
+
+             $table->dropColumn('stok');
+             $table->dropColumn('size');
         });
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeNullableFieldToProducts extends Migration
+class AddRolesFieldToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeNullableFieldToProducts extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-             $table->integer('diskon')->nullable()->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('roles')->default("ADMIN");
         });
     }
 
@@ -25,8 +25,8 @@ class ChangeNullableFieldToProducts extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-             $table->integer('diskon')->nullable()->change(false);
+        Schema::table('users', function (Blueprint $table) {
+             $table->dropColumn('roles');
         });
     }
 }

@@ -26,7 +26,7 @@ class AddColumnStatusAndOrderDetailsIdToOrders extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-             $table->string('status');
+              $table->dropColumn('status');
         });
     }
 }

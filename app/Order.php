@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\District;
+use App\Models\Regency;
+use App\Models\Village;
 
 class Order extends Model
 {
@@ -20,4 +23,18 @@ class Order extends Model
     {
         return $this->hasMany(Detail::class);
     }
+
+      public function district(){
+         return $this->belongsTo(District::class, 'kecamatan', 'id');
+    }
+
+    public function regency()
+    {
+        return $this->belongsTo(Regency::class, 'kota', 'id');
+    }
+
+    public function village(){
+         return $this->belongsTo(Village::class, 'desa', 'id');
+    }
+
 }

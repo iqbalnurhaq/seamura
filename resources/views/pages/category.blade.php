@@ -17,6 +17,31 @@
       bottom: 0;
       background-color: red;
     }
+
+     .meta-diskon{
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 7px;
+     
+      background-color: blue;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .meta-satuan{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 7px;
+     
+      background-color: blue;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 5px;
+    }
   </style>
 @endpush
 
@@ -84,6 +109,8 @@
                       style="background-image: url('{{ Storage::url(product.photo) }}')"
                     ></div> --}}
                     <img :src="product.photo"  class="products-image" alt="">
+                     <div class="meta-satuan">@{{ product.size }}</div>
+                    <div v-if="product.diskon" class="meta-diskon">Diskon @{{ product.diskon  }}%</div>
                   </div>
                   <div class="products-text">@{{ product.name }}</div>
                   <hr>
@@ -97,9 +124,8 @@
                       <button class="btn btn-cart text-right" @click="addToCart(product)"><img src="/images/icon-cart-empty.svg" alt="" /></button>
                     </div>
                   </div>
-                  <hr>
-                  <p class="text-center" style="font-size: 14px">Hanya Tesedia di:</p>
-                 <p style="font-size: 14px">kota malang, Kota Surakarta</p>
+ 
+                  
 
                 </div>
                 </div>
